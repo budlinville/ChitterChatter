@@ -4,8 +4,9 @@
 			$mysqli = new mysqli("mysql.eecs.ku.edu", "laubrey", "fahYee3e", "laubrey");
 			
 			if ($mysqli->connect_errno) {
-				printf("{}");
-				exit();
+				echo "Could not connect to database.
+					<br/>
+					<a href='../signup.html'>Return</a>";
 			}
 			
 			$username = filter_var($_POST["username"], FILTER_SANITIZE_STRING);
@@ -13,13 +14,14 @@
 		
 			if (mysqli_num_rows($mysqli->query("SELECT * FROM User WHERE Username='$username'"))) {
 				echo "Username is already taken.
-					<br />
+					<br/>
 					<a href='../signup.html'>Return</a>";
 			} else {
 				$query = "INSERT INTO User(Username, Password)"."VALUES('$username', '$password')";
 			
 				if (!($mysqli->query($query))) {
 					echo "Error: " . $query . "<br>" . $mysqli->error;
+					echo "<br/><a href='../signup.html'>Return</a>";
 				} else {
 					header("Location: ../homepage.html");
 				}

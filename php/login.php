@@ -4,8 +4,9 @@
 			$mysqli = new mysqli("mysql.eecs.ku.edu", "laubrey", "fahYee3e", "laubrey");
 			
 			if ($mysqli->connect_errno) {
-				printf("{}");
-				exit();
+				echo "Could not connect to databse.
+					<br/>
+					<a href='../login.html'>Return</a>";
 			}
 			
 			$username = filter_var($_POST["username"], FILTER_SANITIZE_STRING);
@@ -14,12 +15,12 @@
 			$query = $mysqli->query("SELECT * FROM User WHERE Username='$username'");
 			if (!mysqli_num_rows($query)) {
 				echo "No user with that name.
-					<br />
+					<br/>
 					<a href='../login.html'>Return</a>";
 			} else {
 				if ($query->fetch_assoc()["Password"] != $password) {
 					echo "Incorrect password.
-					<br />
+					<br/>
 					<a href='../login.html'>Return</a>";
 				} else {
 					header("Location: ../homepage.html");

@@ -9,7 +9,7 @@ if ( !empty( $_POST ) ) {
 		if ($mysqli->connect_errno) {
 			echo "Could not connect to database.
 				<br/>
-				<a href='../signup.php'>Return</a>";
+				<a href='../pages/signup.php'>Return</a>";
 		}
 		
 		//fetch user-submitted username and password from signup.php
@@ -20,17 +20,17 @@ if ( !empty( $_POST ) ) {
 		if (mysqli_num_rows($mysqli->query("SELECT * FROM User WHERE Username='$username'"))) {
 			echo "Username is already taken.
 				<br/>
-				<a href='../signup.php'>Return</a>";
+				<a href='../pages/signup.php'>Return</a>";
 		} else {
 			$query = "INSERT INTO User(Username, Password)"."VALUES('$username', '$password')";
 			
 			if (!($mysqli->query($query))) {
 				echo "Error: " . $query . "<br>" . $mysqli->error;
-				echo "<br/><a href='../signup.php'>Return</a>";
+				echo "<br/><a href='../pages/signup.php'>Return</a>";
 			} else {
 				//Set session variable 'user_id' to username to signify logged in state
 				$_SESSION['user_id'] = $username;
-				header("Location: ../index.php");
+				header("Location: ../pages/index.php");
 			}
 		}
 		

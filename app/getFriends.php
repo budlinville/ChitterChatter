@@ -7,7 +7,7 @@ $mysqli = new mysqli("mysql.eecs.ku.edu", "laubrey", "fahYee3e", "laubrey");
 if ($mysqli->connect_errno) {
 	echo "Could not connect to databse.
 		<br/>
-		<a href='../login.php'>Return</a>";
+		<a href='../pages/login.php'>Return</a>";
 }
 
 $user = $_SESSION['user_id'];

@@ -15,7 +15,7 @@ if (isset($_SESSION['user_id'])) {
 	<body>
 		<h1>Chitter Chatter</h1>
 		<h2>Sign Up</h2><hr>
-		<form action="./server/signup_script.php" method="post">
+		<form action="../app/verfySignup.php" method="post">
 			Username: <input type="text" name="username" id="username"><br>
 			Password: <input type="password" name="password" id="password"><br>
 			<input type="submit" value="Submit">

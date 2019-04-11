@@ -15,7 +15,7 @@ if (!isset($_SESSION['user_id'])) {
 		<script>
 			$("document").ready(function(){
 				$.ajax({
-					url : './server/getFriends.php',
+					url : '../app/getFriends.php',
 					method : 'GET',
 					dataType: 'json',
 					success: function(data) {
@@ -52,11 +52,11 @@ if (!isset($_SESSION['user_id'])) {
 		<a style="text-decoration:none; color:black" href="./index.php"><h1>Chitter Chatter</h1></a>
 		<h2><?php echo $_SESSION['user_id']?>'s Friends</h2>
 		
-		<form action="./server/logout_script.php" method="post">
+		<form action="../app/logout.php" method="post">
 			<input type="submit" value="Logout">
 		</form><hr>
 		
-		<form action="./server/addFriend_script.php" method="post">
+		<form action="../app/addFriend.php" method="post">
 			<input type="text" name="friend"><br>
 			<input type="submit" value="Add Friend">
 		</form>

@@ -9,7 +9,7 @@ if ( !empty( $_POST ) ) {
 		if ($mysqli->connect_errno) {
 			echo "Could not connect to databse.
 				<br/>
-				<a href='../login.php'>Return</a>";
+				<a href='../pages/login.php'>Return</a>";
 		}
 		
 		//fetch user-submitted username and password from login.php
@@ -21,17 +21,17 @@ if ( !empty( $_POST ) ) {
 		if (!mysqli_num_rows($query)) {
 			echo "No user with that name.
 				<br/>
-				<a href='../login.php'>Return</a>";
+				<a href='../pages/login.php'>Return</a>";
 		} else {
 			//check if password is valid
 			if (!password_verify($password, $query->fetch_assoc()["Password"])){
 				echo "Incorrect password.
 				<br/>
-				<a href='../login.php'>Return</a>";
+				<a href='../pages/login.php'>Return</a>";
 			} else {
 				//Set session variable 'user_id' to username to signify logged in state
 				$_SESSION['user_id'] = $username;
-				header("Location: ../index.php");
+				header("Location: ../pages/index.php");
 			}
 		}
 		

@@ -11,16 +11,50 @@ if (!isset($_SESSION['user_id'])) {
 <!DOCTYPE html>
 <html>
 	<head>
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+		<script>
+			$("document").ready(function(){
+				$.ajax({
+					url : './server/getFriends.php',
+					method : 'GET',
+					dataType: 'json',
+					success: function(data) {
+						var list = $("<ul></ul>");
+						
+						for (var i = 0; i < data.length; i++) {
+							var friend = data[i];
+							var listItem = $("<li></li>");
+							var listItemLink = $("<a href='./chat.php'></a>");
+							
+							listItemLink.text(friend.Friend_username);
+							listItemLink.appendTo(listItem);
+							listItem.appendTo(list);
+						}
+						list.appendTo($("body"));
+					},
+					error: function(xhr, status, error) {
+						var errorMessage = xhr.status + ': ' + xhr.statusText;
+						alert('Error - ' + errorMessage + error);
+					}
+				});
+			});
+			
+		</script>
+	
 	</head>
 	<body>
-		<h1>Chitter Chatter</h1>
+	
+	<!-- TODO: Create session variable based on which friend is selected -->
+		<a style="text-decoration:none; color:black" href="./index.php"><h1>Chitter Chatter</h1></a>
 		<h2><?php echo $_SESSION['user_id']?>'s Friends</h2>
+		
 		<form action="./server/logout_script.php" method="post">
 			<input type="submit" value="Logout">
 		</form><hr>
-		<ul>
-			<li><a href="chat.php">Jane Doe</a></li>
-			<li><a href="chat.php">John Doe</a></li>
-		</ul>
+		
+		<form action="./server/addFriend_script.php" method="post">
+			<input type="text" name="friend"><br>
+			<input type="submit" value="Add Friend">
+		</form>
 	</body>
 </html>

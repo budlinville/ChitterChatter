@@ -13,7 +13,7 @@ if (!isset($_SESSION['user_id'])) {
 	<head>
 	</head>
 	<body>
-		<h1>Chitter Chatter</h1>
+		<a style="text-decoration:none; color:black" href="./index.php"><h1>Chitter Chatter</h1></a>
 		<h2><?php echo $_SESSION['user_id']?>'s Chats</h2>
 		<form action="./server/logout_script.php" method="post">
 			<input type="submit" value="Logout">

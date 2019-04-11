@@ -19,18 +19,22 @@ if (!isset($_SESSION['user_id'])) {
 					method : 'GET',
 					dataType: 'json',
 					success: function(data) {
-						var list = $("<ul></ul>");
+						if (data.length > 0) {
+							var list = $("<ul></ul>");
 						
-						for (var i = 0; i < data.length; i++) {
-							var friend = data[i];
-							var listItem = $("<li></li>");
-							var listItemLink = $("<a href='./chat.php'></a>");
-							
-							listItemLink.text(friend.Friend_username);
-							listItemLink.appendTo(listItem);
-							listItem.appendTo(list);
+							for (var i = 0; i < data.length; i++) {
+								var friend = data[i];
+								var listItem = $("<li></li>");
+								var listItemLink = $("<a href='./chat.php'></a>");
+								
+								listItemLink.text(friend.Friend_username);
+								listItemLink.appendTo(listItem);
+								listItem.appendTo(list);
+							}
+							list.appendTo($("body"));
+						} else {
+							$("<h4>You have no friends. You are a loser.</h4>").appendTo($("body"));
 						}
-						list.appendTo($("body"));
 					},
 					error: function(xhr, status, error) {
 						var errorMessage = xhr.status + ': ' + xhr.statusText;

@@ -12,7 +12,7 @@ if ( !empty( $_POST ) ) {
 				<a href='../pages/login.php'>Return</a>";
 		}
 		
-		//fetch user-submitted username and password from login.php
+		//fetch user-submitted friend's username from hompage.php
 		$friend = filter_var($_POST["friend"], FILTER_SANITIZE_STRING);
 		
 		//check if friend's username exists
@@ -20,7 +20,7 @@ if ( !empty( $_POST ) ) {
 		if (!mysqli_num_rows($query)) {
 			echo "No user with that name.
 				<br/>
-				<a href='../pages/friends.php'>Return</a>";
+				<a href='../pages/homepage.php'>Return</a>";
 		} else {
 			$user = $_SESSION['user_id'];
 			
@@ -32,17 +32,24 @@ if ( !empty( $_POST ) ) {
 			if (mysqli_num_rows($query)) {
 				echo "You are already friends with this person.
 					<br/>
-					<a href='../pages/friends.php'>Return</a>";
+					<a href='../pages/homepage.php'>Return</a>";
 			} else {
 				$query = "INSERT INTO Friends(Username,Friend_username,Hashed_chat_value)"."VALUES('$user','$friend','$hashChatVal')";
 				
 				if (!($mysqli->query($query))) {
 					echo "Error: " . $query . "<br>" . $mysqli->error;
-					echo "<br/><a href='../pages/friends.php'>Return</a>";
+					echo "<br/><a href='../pages/homepage.php'>Return</a>";
 				} else {
-					echo "Friend successfully added.
-					<br/>
-					<a href='../pages/friends.php'>Return</a>";
+					//TODO: May need better solution than adding friend for receiving user
+					$query = "INSERT INTO Friends(Username,Friend_username,Hashed_chat_value)"."VALUES('$friend','$user','$hashChatVal')";
+					if (!($mysqli->query($query))) {
+						echo "Error: " . $query . "<br>" . $mysqli->error;
+						echo "<br/><a href='../pages/homepage.php'>Return</a>";
+					} else {
+						echo "Friend successfully added.
+							<br/>
+							<a href='../pages/homepage.php'>Return</a>";
+					}
 				}
 			}
 		}

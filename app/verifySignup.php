@@ -30,7 +30,7 @@ if ( !empty( $_POST ) ) {
 			} else {
 				//Set session variable 'user_id' to username to signify logged in state
 				$_SESSION['user_id'] = $username;
-				header("Location: ../pages/index.php");
+				header("Location: ../pages/homepage.php");
 			}
 		}
 		

@@ -3,7 +3,7 @@ session_start();
 
 //If already logged in, redirect to homepage
 if (isset($_SESSION['user_id'])) {
-    header("Location: ./index.php");
+    header("Location: ./homepage.php");
 	exit();
 }
 ?>

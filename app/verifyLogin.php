@@ -26,12 +26,12 @@ if ( !empty( $_POST ) ) {
 			//check if password is valid
 			if (!password_verify($password, $query->fetch_assoc()["Password"])){
 				echo "Incorrect password.
-				<br/>
-				<a href='../pages/login.php'>Return</a>";
+					<br/>
+					<a href='../pages/login.php'>Return</a>";
 			} else {
 				//Set session variable 'user_id' to username to signify logged in state
 				$_SESSION['user_id'] = $username;
-				header("Location: ../pages/index.php");
+				header("Location: ../pages/homepage.php");
 			}
 		}
 		

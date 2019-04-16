@@ -56,10 +56,8 @@ if (!isset($_SESSION['user_id'])) {
 		</script>
 	</head>
 	<body>
-	
-	<!-- TODO: Create session variable based on which friend is selected -->
 		<a style="text-decoration:none; color:black" href="./homepage.php"><h1>Chitter Chatter</h1></a>
-		<h2><?php echo $_SESSION['user_id']?>'s Friends</h2>
+		<h2><?php echo $_SESSION['user_id']?>'s Homepage</h2>
 		
 		<form action="../app/logout.php" method="post">
 			<input type="submit" value="Logout">

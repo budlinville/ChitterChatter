@@ -37,8 +37,8 @@ if ( !empty( $_POST ) ) {
 				$query = "INSERT INTO Friends(Username,Friend_username,Hashed_chat_value)"."VALUES('$user','$friend','$hashChatVal')";
 				
 				if (!($mysqli->query($query))) {
-					echo "Error: " . $query . "<br>" . $mysqli->error;
-					echo "<br/><a href='../pages/homepage.php'>Return</a>";
+					echo "Error: " . $query . "<br>" . $mysqli->error."
+						<br/><a href='../pages/homepage.php'>Return</a>";
 				} else {
 					//TODO: May need better solution than adding friend for receiving user
 					$query = "INSERT INTO Friends(Username,Friend_username,Hashed_chat_value)"."VALUES('$friend','$user','$hashChatVal')";

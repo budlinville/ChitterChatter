@@ -27,8 +27,7 @@ if ( !empty( $_POST ) ) {
 			if (!mysqli_num_rows($query)) {
 				$query = "INSERT INTO Chat(Chat_id,Newest_Message_id)"."VALUES('$chatId', NULL)";
 			}
-			$_SESSION['chatter_id'] = $friend;
-			$_SESSION['chat_id'] = $chatId;
+			$_SESSION['friend_id'] = $friend;
 		}
 	
 		$mysqli->close();

@@ -25,8 +25,8 @@ if ( !empty( $_POST ) ) {
 			$query = "INSERT INTO User(Username, Password)"."VALUES('$username', '$password')";
 			
 			if (!($mysqli->query($query))) {
-				echo "Error: " . $query . "<br>" . $mysqli->error;
-				echo "<br/><a href='../pages/signup.php'>Return</a>";
+				echo "Error: " . $query . "<br>" . $mysqli->error."
+					<br/><a href='../pages/signup.php'>Return</a>";
 			} else {
 				//Set session variable 'user_id' to username to signify logged in state
 				$_SESSION['user_id'] = $username;

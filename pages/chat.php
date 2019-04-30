@@ -63,7 +63,7 @@ if (!isset($_SESSION['user_id'])) {
 	</head>
 	<body>
 		<a style="text-decoration:none; color:black" href="./homepage.php"><h1>Chitter Chatter</h1></a>
-		<h2><?php echo $_SESSION['user_id']?>'s chat with <?php echo $_SESSION['chatter_id']?></h2>
+		<h2><?php echo $_SESSION['user_id']?>'s chat with <?php echo $_SESSION['friend_id']?></h2>
 		<form action="../app/logout.php" method="post">
 			<input type="submit" value="Logout">
 		</form><hr style="border-top:1px solid black">

@@ -17,7 +17,7 @@ if ( !empty( $_POST ) ) {
 		$user = $_SESSION['user_id'];
 		
 		//concatenate string alphanumerically and hash to get unique hash id
-		$chatId = (strnatcmp($user,$chatter) < 0) ? sha1($user.$friend) : sha1($friend.$user);
+		$chatId = (strnatcmp($user,$friend) < 0) ? sha1($user.$friend) : sha1($friend.$user);
 		
 		//check if friend's username exists within database
 		$query = $mysqli->query("SELECT * FROM User WHERE Username='$friend'");

@@ -21,21 +21,33 @@ if ( !empty( $_POST ) ) {
 		//obtain chat_id using user and friend session variables
 		$chatId = (strnatcmp($user,$friend) < 0) ? sha1($user.$friend) : sha1($friend.$user);
 		
-		//check if chat is in our database
+		//check if chat is in our database; if not, need to create chat as well
 		$query = $mysqli->query("SELECT * FROM Chat WHERE Chat_id='$chatId'");
 		if (!mysqli_num_rows($query)) {
-			$query = $mysqli->query("INSERT INTO Message(Sender,Contents)".
-				"VALUES('$user','$message')");
+			$mysqli->query("INSERT INTO Message(Sender,Contents) VALUES('$user','$message')");
 			
 			//get the auto-incremented message id value
 			$msgId = $mysqli->insert_id;
 			
-			$query = $mysqli->query("INSERT INTO Chat(Chat_id,Newest_Message_id)"."VALUES('$chatId','$msgId')");
+			$mysqli->query("INSERT INTO Chat(Chat_id,Newest_Message_id) VALUES('$chatId','$msgId')");
 		} else {
-			//TODO
+			//TODO: NEED TO FIX THIS
+			$parentId = mysqli_fetch_object($mysqli->query("Select Newest_Message_id From Chat WHERE Chat_id='$chatId'"));
+			$parentId = $parentId->Newest_Message_id;
+			
+			$mysqli->query("INSERT INTO Message(Parent_id,Sender,Contents) VALUES('$parentId','$user','$message')");
+			
+			//get the auto-incremented message id value
+			$msgId = $mysqli->insert_id;
+
+			//update Newest_Message_id to new message id
+			$mysqli->query("UPDATE Chat SET Newest_Message_id='$msgId' WHERE Chat_id='$chatId'");
 		}
 		
-		echo $message;
+		echo "Message sent.
+			<br/>
+			<a href='../pages/chat.php'>Return</a>";
+				
 		$mysqli->close();
 	}
 }

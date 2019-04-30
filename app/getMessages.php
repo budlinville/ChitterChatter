@@ -11,17 +11,33 @@ if (!$mysqli->connect_errno) {
 	//obtain chat_id using user and friend session variables
 	$chatId = (strnatcmp($user,$friend) < 0) ? sha1($user.$friend) : sha1($friend.$user);
 	
-	$newestMsgId = mysqli_fetch_object($mysqli->query("Select Newest_Message_id From Chat WHERE Chat_id='$chatId'"));
-	$newestMsgId = $newestMsgId->Newest_Message_id;
+	$query = $mysqli->query("Select Newest_Message_id From Chat WHERE Chat_id='$chatId'");
 
-	while($row = mysqli_fetch_assoc($friends_obj)) {
-		$friends_arr[] = $row;
+	if (!mysqli_num_rows($query)) {
+		return false;
+	} else {
+		$newestMsgId = mysqli_fetch_object($query)->Newest_Message_id;
+		$retArr = array();
+		
+		$iter = $newestMsgId;
+		while (1) {
+			$message = $mysqli->query("SELECT Message_id,Parent_id,Sender,Contents FROM Message WHERE Message_id='$iter'");
+			$message_obj = mysqli_fetch_object($message);
+			
+			$retArr[] = json_encode($message_obj);
+			
+			//iterate using parent id to go up chain of messages
+			if (is_null($message_obj->Parent_id)) {
+				break;
+			} else {
+				$iter = $message_obj->Parent_id;
+			}
+		}
 	}
 
-	$friends_json = json_encode($friends_arr);
 
 	header('Content-type: application/json');
-	echo $friends_json;
+	echo json_encode($retArr);
 }
 
 ?>

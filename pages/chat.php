@@ -24,9 +24,35 @@ if (!isset($_SESSION['user_id'])) {
 					dataType: 'json',
 					success: function(data) {
 						if (data.length > 0) {
-							console.log(data);
+							for (var i = data.length - 1; i >= 0; i--) {
+								var msgContainer = $("<div></div>");
+								msgContainer.css("border-radius", "20px");
+								msgContainer.css("padding", "8px");
+								msgContainer.css("margin", "4px");
+								
+								if (data[i]["user"] == "yes") {
+									msgContainer.css("background-color", "#C2CEFB");
+									msgContainer.css("border", "2px solid blue");
+								} else {
+									msgContainer.css("background-color", "#BBF8B9");
+									msgContainer.css("border", "2px solid green");
+								}
+								
+								var name = data[i]["Sender"];
+								var msgHeader = $("<h4></h4>");
+								msgHeader.text(name);
+								
+								var message = data[i]["Contents"];
+								var msgBody = $("<p></p>");
+								msgBody.text(message);
+								
+								msgHeader.appendTo(msgContainer);
+								msgBody.appendTo(msgContainer);
+								msgContainer.appendTo($("#msgs"));
+								
+							}
 						} else {
-							console.log("DIDNT WORK");
+							$("<h4>No messages. Come on. Don't be shy!</h4>").appendTo($("#msgs"));
 						}
 					},
 					error: function(xhr, status, error) {
@@ -34,18 +60,6 @@ if (!isset($_SESSION['user_id'])) {
 						alert('Error - ' + errorMessage + error);
 					}
 				});
-				/*
-				$('body').on('click', 'button', function () {
-					$.ajax({
-						url : '../app/prepareChat.php',
-						method : 'POST',
-						data: { friend:$(this).text() },
-						success: function() {
-							window.location.href = "./chat.php";
-						}
-					});
-				});
-				*/
 			});
 		</script>
 	</head>
@@ -55,6 +69,8 @@ if (!isset($_SESSION['user_id'])) {
 		<form action="../app/logout.php" method="post">
 			<input type="submit" value="Logout">
 		</form><hr style="border-top:1px solid black">
+		
+		<div id="msgs"></div>
 		
 		<form action="../app/sendMessage.php" method="post">
 			<textarea rows="4" cols="50" id="newMsg" name="newMsg">Enter text here...</textarea><br/>

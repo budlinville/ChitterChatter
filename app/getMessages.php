@@ -24,7 +24,17 @@ if (!$mysqli->connect_errno) {
 			$message = $mysqli->query("SELECT Message_id,Parent_id,Sender,Contents FROM Message WHERE Message_id='$iter'");
 			$message_obj = mysqli_fetch_object($message);
 			
-			$retArr[] = json_encode($message_obj);
+			$retObj = clone $message_obj;
+			unset($retObj->Message_id);
+			unset($retObj->Parent_id);
+			if ($user == $retObj->Sender) {
+				$retObj = (object) array_merge( (array)$retObj, array( 'user' => 'yes' ) );
+			} else {
+				$retObj = (object) array_merge( (array)$retObj, array( 'user' => 'no' ) );
+			}
+			
+			//$retArr[] = json_encode($retObj);
+			$retArr[] = $retObj;
 			
 			//iterate using parent id to go up chain of messages
 			if (is_null($message_obj->Parent_id)) {

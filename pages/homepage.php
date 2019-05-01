@@ -62,7 +62,7 @@ if (!isset($_SESSION['user_id'])) {
 		<form action="../app/logout.php" method="post">
 			<input type="submit" value="Logout">
 		</form><hr>
-		
+		<div></div>
 		<form action="../app/addFriend.php" method="post">
 			<input type="text" name="friend"><br>
 			<input type="submit" value="Add Friend">

@@ -33,9 +33,11 @@ if (!isset($_SESSION['user_id'])) {
 								if (data[i]["user"] == "yes") {
 									msgContainer.css("background-color", "#C2CEFB");
 									msgContainer.css("border", "2px solid blue");
+									msgContainer.css("margin-left", "8%");
 								} else {
 									msgContainer.css("background-color", "#BBF8B9");
 									msgContainer.css("border", "2px solid green");
+									msgContainer.css("margin-right", "8%");
 								}
 								
 								var name = data[i]["Sender"];
@@ -56,11 +58,14 @@ if (!isset($_SESSION['user_id'])) {
 						}
 					},
 					error: function(xhr, status, error) {
-						var errorMessage = xhr.status + ': ' + xhr.statusText;
-						alert('Error - ' + errorMessage + error);
+						$("<h4>No messages. Come on. Don't be shy!</h4>").appendTo($("#msgs"));
 					}
 				});
 			});
+			
+			function clearContents(element) {
+				element.value = '';
+			}
 		</script>
 	</head>
 	<body>
@@ -68,12 +73,12 @@ if (!isset($_SESSION['user_id'])) {
 		<h2><?php echo $_SESSION['user_id']?>'s chat with <?php echo $_SESSION['friend_id']?></h2>
 		<form action="../app/logout.php" method="post">
 			<input type="submit" value="Logout">
-		</form><hr style="border-top:1px solid black">
+		</form><hr>
 		
 		<div id="msgs"></div>
 		
 		<form action="../app/sendMessage.php" method="post">
-			<textarea rows="4" cols="50" id="newMsg" name="newMsg">Enter text here...</textarea><br/>
+			<textarea onfocus="clearContents(this)" rows="8" cols="100" id="newMsg" name="newMsg">Enter text here...</textarea><br/>
 			<input type="submit" value="Send">
 		</form>
 	</body>

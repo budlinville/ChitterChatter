@@ -24,12 +24,12 @@ if ( !empty( $_POST ) ) {
 		//check if chat is in our database; if not, need to create chat as well
 		$query = $mysqli->query("SELECT * FROM Chat WHERE Chat_id='$chatId'");
 		if (!mysqli_num_rows($query)) {
-			$mysqli->query("INSERT INTO Message(Sender,Contents) VALUES('$user','$message')");
-			
+			// TODO: This is already implemented in prepareChat.php : Keeping code in here anyways
+			//$mysqli->query("INSERT INTO Message(Sender,Contents) VALUES('$user','$message')");
 			//get the auto-incremented message id value
-			$msgId = $mysqli->insert_id;
-			
-			$mysqli->query("INSERT INTO Chat(Chat_id,Newest_Message_id) VALUES('$chatId','$msgId')");
+			//$msgId = $mysqli->insert_id;
+			//$mysqli->query("INSERT INTO Chat(Chat_id,Newest_Message_id) VALUES('$chatId','$msgId')");
+			echo "UH OH";
 		} else {
 			//TODO: NEED TO FIX THIS
 			$parentId = mysqli_fetch_object($mysqli->query("Select Newest_Message_id From Chat WHERE Chat_id='$chatId'"));

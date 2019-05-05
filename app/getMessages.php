@@ -14,7 +14,7 @@ if (!$mysqli->connect_errno) {
 	$query = $mysqli->query("Select Newest_Message_id From Chat WHERE Chat_id='$chatId'");
 
 	if (!mysqli_num_rows($query)) {
-		return false;
+		return null;
 	} else {
 		$newestMsgId = mysqli_fetch_object($query)->Newest_Message_id;
 		$retArr = array();
@@ -37,10 +37,14 @@ if (!$mysqli->connect_errno) {
 			$retArr[] = $retObj;
 			
 			//iterate using parent id to go up chain of messages
-			if (is_null($message_obj->Parent_id)) {
-				break;
-			} else {
-				$iter = $message_obj->Parent_id;
+				if (is_null($message_obj)) {
+					break;
+				} else {
+				if (is_null($message_obj->Parent_id)) {
+					break;
+				} else {
+					$iter = $message_obj->Parent_id;
+				}
 			}
 		}
 	}

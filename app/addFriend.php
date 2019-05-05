@@ -40,15 +40,19 @@ if ( !empty( $_POST ) ) {
 					echo "Error: " . $query . "<br>" . $mysqli->error."
 						<br/><a href='../pages/homepage.php'>Return</a>";
 				} else {
-					//TODO: May need better solution than adding friend for receiving user
-					$query = "INSERT INTO Friends(Username,Friend_username,Hashed_chat_value)"."VALUES('$friend','$user','$hashChatVal')";
-					if (!($mysqli->query($query))) {
-						echo "Error: " . $query . "<br>" . $mysqli->error;
-						echo "<br/><a href='../pages/homepage.php'>Return</a>";
-					} else {
-						echo "Friend successfully added.
-							<br/>
-							<a href='../pages/homepage.php'>Return</a>";
+					//check if friend is already friends with user
+					$query = $mysqli->query("SELECT * FROM Friends WHERE Username='$friend' AND Friend_username='$user'");
+					if (!mysqli_num_rows($query)) {
+						//TODO: May need better solution than adding friend for receiving user
+						$query = "INSERT INTO Friends(Username,Friend_username,Hashed_chat_value)"."VALUES('$friend','$user','$hashChatVal')";
+						if (!($mysqli->query($query))) {
+							echo "Error: " . $query . "<br>" . $mysqli->error;
+							echo "<br/><a href='../pages/homepage.php'>Return</a>";
+						} else {
+							echo "Friend successfully added.
+								<br/>
+								<a href='../pages/homepage.php'>Return</a>";
+						}
 					}
 				}
 			}
